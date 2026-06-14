@@ -1,0 +1,15 @@
+# Secrets
+.env
+
+# Vector store
+chroma_db/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# User documents (keep folder, ignore contents)
+data/*
+!data/.gitkeep
