@@ -7,6 +7,19 @@ Retrieval-Augmented Generation (RAG).
 
 ## How it works
 
+```mermaid
+flowchart TD
+  files["PDF, TXT, MD, or DOCX"] --> load[Load documents]
+  load --> split["Split into 1000-character chunks, overlap 150"]
+  split --> embed["Embed locally with all-MiniLM-L6-v2"]
+  embed --> chroma["Store in Chroma collection documents"]
+  question[User question] --> rephrase["Groq rewrites the question using chat history"]
+  rephrase --> retrieve["Retrieve the top 4 chunks from Chroma"]
+  chroma --> retrieve
+  retrieve --> generate["Groq llama-3.3-70b-versatile answers from context only"]
+  generate --> ui["Streamlit shows the answer and source snippets"]
+```
+
 1. **Ingest** — documents (`.pdf`, `.txt`, `.md`, `.docx`) are split into ~1000-character
    chunks, embedded locally with `all-MiniLM-L6-v2`, and stored in a persistent
    Chroma database.
